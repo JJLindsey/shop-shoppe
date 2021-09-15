@@ -7,8 +7,9 @@ import { idbPromise } from "../../utils/helpers";
 import { QUERY_CHECKOUT } from '../../utils/queries';
 import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery } from '@apollo/client';
+import "./style.css";
 
-const stripePromise = loadStripe('pk_test_51JZJBcGYNnIUnppEqpnun2sb60UmweNNpzupODpMtTWUEny1tQjTuRIBXIkUe49oT0lLp72HDtEF7y8tILJo2n1l00A1cy7p04')
+const stripe = loadStripe('pk_test_51JZJBcGYNnIUnppEqpnun2sb60UmweNNpzupODpMtTWUEny1tQjTuRIBXIkUe49oT0lLp72HDtEF7y8tILJo2n1l00A1cy7p04');
 
 const Cart = () => {
     const [state, dispatch] = useStoreContext();
@@ -16,7 +17,7 @@ const Cart = () => {
 
     useEffect(() => {
         if (data) {
-            stripePromise.then((res) => {
+            stripe.then((res) => {
                 res.redirectToCheckout({ sessionId: data.checkout.session });
             });
         }
